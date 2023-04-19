@@ -1,8 +1,11 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { TestContext } from "../context/TestContext";
 
 const Header = ({ handleAdd }) => {
     const [todo, setTodo] = useState("");
+    const { totalTodo } = useContext(TestContext);
+    console.log(totalTodo);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -37,6 +40,7 @@ const Header = ({ handleAdd }) => {
                         </button>
                     </div>
                 </form>
+                <div>TotalTodo: {totalTodo}</div>
             </div>
         </div>
     );

@@ -1,10 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, createContext, useContext } from "react";
 import Header from "./Header";
 import Content from "./Content";
 import axios from "axios";
 
+import { TestContext } from "../context/TestContext";
+
 const Wrapper = () => {
     const [listTodos, setListTodos] = useState([]);
+    const [totalTodo, setTotalTodo] = useState(0);
     const eventChangeRef = useRef(0);
     const BASE_URL = "http://localhost:5000/api";
 
@@ -14,6 +17,7 @@ const Wrapper = () => {
                 .get(`${BASE_URL}/todos`)
                 .then((res) => {
                     setListTodos(res.data);
+                    setTotalTodo(res.data.length);
                 })
                 .catch((err) => {
                     console.log(err);
@@ -27,6 +31,7 @@ const Wrapper = () => {
         fetchData();
     }, [eventChangeRef.current]);
     console.log("running");
+    console.log(totalTodo);
 
     const handleAdd = async (newTodo) => {
         try {
@@ -61,14 +66,16 @@ const Wrapper = () => {
         }
     };
     return (
-        <div className='h-screen'>
-            <Header handleAdd={handleAdd} />
-            <Content
-                listTodos={listTodos}
-                handleRemove={handleRemove}
-                handleChangeStatus={handleChangeStatus}
-            />
-        </div>
+        <TestContext.Provider value={totalTodo}>
+            <div className='h-screen'>
+                <Header handleAdd={handleAdd} />
+                <Content
+                    listTodos={listTodos}
+                    handleRemove={handleRemove}
+                    handleChangeStatus={handleChangeStatus}
+                />
+            </div>
+        </TestContext.Provider>
     );
 };
 
