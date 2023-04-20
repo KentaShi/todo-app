@@ -1,3 +1,5 @@
 import { createContext } from "react";
-
-export const TestContext = createContext();
+const INITIAL_STATE = {
+    count: 0,
+};
+export const TestContext = createContext(INITIAL_STATE);

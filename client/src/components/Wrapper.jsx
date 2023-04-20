@@ -1,15 +1,26 @@
-import { useEffect, useRef, useState, createContext, useContext } from "react";
+import {
+    useEffect,
+    useRef,
+    useState,
+    createContext,
+    useContext,
+    useReducer,
+} from "react";
 import Header from "./Header";
 import Content from "./Content";
 import axios from "axios";
 
 import { TestContext } from "../context/TestContext";
 
+import TodoReducer from "../reducer/TodoReducer";
+
 const Wrapper = () => {
     const [listTodos, setListTodos] = useState([]);
     const [totalTodo, setTotalTodo] = useState(0);
     const eventChangeRef = useRef(0);
     const BASE_URL = "http://localhost:5000/api";
+
+    const [todos, dispatch] = useReducer(TodoReducer, listTodos);
 
     const fetchData = async () => {
         try {
@@ -30,8 +41,6 @@ const Wrapper = () => {
     useEffect(() => {
         fetchData();
     }, [eventChangeRef.current]);
-    console.log("running");
-    console.log(totalTodo);
 
     const handleAdd = async (newTodo) => {
         try {
@@ -66,7 +75,7 @@ const Wrapper = () => {
         }
     };
     return (
-        <TestContext.Provider value={totalTodo}>
+        <TestContext.Provider value={{ count: totalTodo }}>
             <div className='h-screen'>
                 <Header handleAdd={handleAdd} />
                 <Content
