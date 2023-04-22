@@ -42,6 +42,8 @@ const Wrapper = () => {
         fetchData();
     }, [eventChangeRef.current]);
 
+    console.log(todos);
+
     const handleAdd = async (newTodo) => {
         try {
             const res = await axios.post(
@@ -50,6 +52,7 @@ const Wrapper = () => {
             );
             setListTodos([...listTodos, res]);
             eventChangeRef.current++;
+            dispatch({ type: "added", payload: newTodo });
         } catch (error) {
             console.log(error);
         }

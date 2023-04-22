@@ -1,12 +1,7 @@
 const TodoReducer = (state, action) => {
     switch (action.type) {
         case "added": {
-            return [
-                ...state,
-                {
-                    name: action.name,
-                },
-            ];
+            return [...state, action.payload];
         }
         case "changed": {
             return state.map((t) => {
@@ -18,7 +13,7 @@ const TodoReducer = (state, action) => {
             });
         }
         case "deleted": {
-            return state.filter((t) => t._id === action._id);
+            return state.filter((t) => t._id !== action._id);
         }
         default: {
             throw Error("Unknown action" + action.type);

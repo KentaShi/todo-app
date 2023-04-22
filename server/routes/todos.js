@@ -24,6 +24,17 @@ router.put("/:id", async (req, res) => {
                 ? "done"
                 : "done";
         await todo.updateOne({ status: nextStatus });
+        return res.status(200).json("This todo has been changed status!!!");
+    } catch (error) {
+        return res.status(500).json(error);
+    }
+});
+
+//update a Todo
+router.put("/:id", async (req, res) => {
+    try {
+        const todo = await Todo.findById(req.params.id);
+        await todo.updateOne({ $set: req.body });
         return res.status(200).json("This todo has been updated!!!");
     } catch (error) {
         return res.status(500).json(error);

@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 
 import arrowIcon from "../assets/arrow-64.png";
+import editIcon from "../assets/edit.png";
+import saveIcon from "../assets/save.png";
 
 const Item = ({ id, name, status, handleRemove, handleChangeStatus }) => {
+    const [isEditing, setIsEditing] = useState(false);
     const handleClickChangeStatus = (e) => {
         e.preventDefault();
         handleChangeStatus(id);
@@ -13,8 +16,24 @@ const Item = ({ id, name, status, handleRemove, handleChangeStatus }) => {
         handleRemove(id);
     };
 
-    return (
-        <div className='flex my-4 items-center bg-white p-3 rounded'>
+    const editingItem = isEditing ? (
+        <>
+            <input
+                type='text'
+                value={name}
+                className='shadow appearance-none border rounded w-full py-2 px-3 mr-4 text-gray-900'
+            />
+            <img
+                onClick={() => setIsEditing(false)}
+                className='flex-shrink-0 mr-2 cursor-pointer'
+                src={saveIcon}
+                alt='save todo'
+                width={30}
+                height={30}
+            />
+        </>
+    ) : (
+        <>
             <p
                 className={`w-full ${
                     status === "done"
@@ -24,10 +43,24 @@ const Item = ({ id, name, status, handleRemove, handleChangeStatus }) => {
             >
                 {name}
             </p>
+            <img
+                onClick={() => setIsEditing(true)}
+                className='flex-shrink-0 mr-2 cursor-pointer'
+                src={editIcon}
+                alt='edit todo'
+                width={30}
+                height={30}
+            />
+        </>
+    );
+
+    return (
+        <div className='flex my-4 items-center bg-white p-3 rounded'>
+            {editingItem}
             {status !== "done" && (
                 <img
                     onClick={handleClickChangeStatus}
-                    className='flex-shrink-0 mr-1 cursor-pointer'
+                    className='flex-shrink-0 mr-2 cursor-pointer'
                     src={arrowIcon}
                     alt='move to next status'
                     width={32}
