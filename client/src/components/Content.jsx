@@ -1,7 +1,12 @@
 import React from "react";
 import CardContent from "./CardContent";
 
-const Content = ({ listTodos, handleRemove, handleChangeStatus }) => {
+const Content = ({
+    listTodos,
+    handleRemove,
+    handleChangeStatus,
+    handleChangeName,
+}) => {
     const comingList = listTodos.filter((item) => item.status === "coming");
     const doingList = listTodos.filter((item) => item.status === "doing");
     const doneList = listTodos.filter((item) => item.status === "done");
@@ -14,18 +19,21 @@ const Content = ({ listTodos, handleRemove, handleChangeStatus }) => {
                     listTodos={comingList}
                     handleRemove={handleRemove}
                     handleChangeStatus={handleChangeStatus}
+                    handleChangeName={handleChangeName}
                 />
                 <CardContent
                     status='doing'
                     listTodos={doingList}
                     handleRemove={handleRemove}
                     handleChangeStatus={handleChangeStatus}
+                    handleChangeName={handleChangeName}
                 />
                 <CardContent
                     status='done'
                     listTodos={doneList}
                     handleRemove={handleRemove}
                     handleChangeStatus={handleChangeStatus}
+                    handleChangeName={handleChangeName}
                 />
             </div>
         </div>

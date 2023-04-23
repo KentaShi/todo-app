@@ -42,8 +42,6 @@ const Wrapper = () => {
         fetchData();
     }, [eventChangeRef.current]);
 
-    console.log(todos);
-
     const handleAdd = async (newTodo) => {
         try {
             const res = await axios.post(
@@ -70,7 +68,17 @@ const Wrapper = () => {
 
     const handleChangeStatus = async (id) => {
         try {
-            await axios.put(`${BASE_URL}/todos/${id}`);
+            await axios.put(`${BASE_URL}/todos/status/${id}`);
+            fetchData();
+            eventChangeRef.current++;
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const handleChangeName = async (id, name) => {
+        try {
+            await axios.put(`${BASE_URL}/todos/${id}`, { name });
             fetchData();
             eventChangeRef.current++;
         } catch (error) {
@@ -85,6 +93,7 @@ const Wrapper = () => {
                     listTodos={listTodos}
                     handleRemove={handleRemove}
                     handleChangeStatus={handleChangeStatus}
+                    handleChangeName={handleChangeName}
                 />
             </div>
         </TestContext.Provider>

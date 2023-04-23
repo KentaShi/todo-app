@@ -13,7 +13,7 @@ router.post("/", async (req, res) => {
 });
 
 //update status Todo
-router.put("/:id", async (req, res) => {
+router.put("/status/:id", async (req, res) => {
     try {
         const todo = await Todo.findById(req.params.id);
         const currStatus = todo.status;
@@ -34,7 +34,7 @@ router.put("/:id", async (req, res) => {
 router.put("/:id", async (req, res) => {
     try {
         const todo = await Todo.findById(req.params.id);
-        await todo.updateOne({ $set: req.body });
+        await todo.updateOne({ name: req.body.name });
         return res.status(200).json("This todo has been updated!!!");
     } catch (error) {
         return res.status(500).json(error);
